@@ -198,7 +198,7 @@ root_agent = historical_court_system
 
 ---
 
-## 9. โค้ดที่ใช้สำหรับทำงาน
+## 10. โค้ดที่ใช้สำหรับทำงาน
 
 import os
 from datetime import datetime
@@ -215,28 +215,20 @@ from google.genai import types
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
 
-
-# ==========================================================
 # ENVIRONMENT
-# ==========================================================
 
 load_dotenv()
 
 MODEL_NAME = os.getenv("MODEL", "gemini-1.5-pro-preview-0409")
 RETRY = types.HttpRetryOptions(initial_delay=1, attempts=6)
 
-
-# ==========================================================
 # WIKIPEDIA TOOL
-# ==========================================================
 
 api_wrapper = WikipediaAPIWrapper(top_k_results=5, doc_content_chars_max=5000)
 wiki_tool = LangchainTool(tool=WikipediaQueryRun(api_wrapper=api_wrapper))
 
 
-# ==========================================================
 # CUSTOM TOOLS
-# ==========================================================
 
 def set_topic(tool_context: ToolContext, official_topic: str):
     if not official_topic.strip():
@@ -272,13 +264,13 @@ def write_report(tool_context: ToolContext, content: str):
     path = os.path.join(folder, filename)
 
     header = f"""
-=========================================
+
 HISTORICAL MOCK COURT REPORT
 Topic: {topic}
 Generated at: {timestamp}
 Positive Evidence Count: {len(pos)}
 Negative Evidence Count: {len(neg)}
-=========================================
+
 """
 
     with open(path, "w", encoding="utf-8") as f:
@@ -287,9 +279,8 @@ Negative Evidence Count: {len(neg)}
     return {"status": "saved", "path": path}
 
 
-# ==========================================================
+
 # STEP 1 – INQUIRY
-# ==========================================================
 
 inquiry_agent = Agent(
     name="inquiry_agent",
@@ -301,12 +292,7 @@ inquiry_agent = Agent(
     """,
     tools=[wiki_tool, set_topic]
 )
-
-
-# ==========================================================
 # STEP 2 – INVESTIGATION (Parallel)
-# ==========================================================
-
 admirer = Agent(
     name="admirer",
     model=Gemini(model=MODEL_NAME, retry_options=RETRY),
@@ -325,7 +311,6 @@ admirer = Agent(
     """,
     tools=[wiki_tool, append_state]
 )
-
 critic = Agent(
     name="critic",
     model=Gemini(model=MODEL_NAME, retry_options=RETRY),
@@ -344,17 +329,11 @@ critic = Agent(
     """,
     tools=[wiki_tool, append_state]
 )
-
 investigation_team = ParallelAgent(
     name="investigation_team",
     sub_agents=[admirer, critic]
 )
-
-
-# ==========================================================
 # STEP 3 – TRIAL & REVIEW (Loop)
-# ==========================================================
-
 judge = Agent(
     name="judge",
     model=Gemini(model=MODEL_NAME, retry_options=RETRY),
@@ -382,12 +361,7 @@ trial_session = LoopAgent(
     sub_agents=[investigation_team, judge],
     max_iterations=6
 )
-
-
-# ==========================================================
 # STEP 4 – VERDICT
-# ==========================================================
-
 clerk = Agent(
     name="clerk",
     model=Gemini(model=MODEL_NAME, retry_options=RETRY),
@@ -411,12 +385,7 @@ clerk = Agent(
     """,
     tools=[write_report]
 )
-
-
-# ==========================================================
 # SYSTEM ASSEMBLY
-# ==========================================================
-
 historical_court_system = SequentialAgent(
     name="historical_court_system",
     sub_agents=[

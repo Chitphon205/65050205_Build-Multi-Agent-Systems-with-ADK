@@ -197,3 +197,5 @@ root_agent = historical_court_system
 โครงการนี้สอดคล้องกับข้อกำหนดเชิงสถาปัตยกรรมและข้อกำหนดทางเทคนิคที่กำหนดไว้อย่างครบถ้วน
 
 ---
+<img width="1224" height="645" alt="image" src="https://github.com/user-attachments/assets/a9071515-146a-421e-8576-249f3563e880" />
+

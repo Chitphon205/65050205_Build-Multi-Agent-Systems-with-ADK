@@ -2,6 +2,7 @@
 ### Multi-Agent Architecture using Google ADK
 ---
 ## 1. บทนำ (Introduction)
+
 โครงการนี้เป็นการพัฒนาระบบปัญญาประดิษฐ์แบบหลายเอเจนต์ (Multi-Agent System)  
 โดยใช้ Google Agent Development Kit (ADK) เพื่อจำลองกระบวนการพิจารณาคดีทางประวัติศาสตร์
 
@@ -10,6 +11,7 @@
 จากนั้นทำการตรวจสอบความสมดุลของข้อมูลก่อนสรุปผลในรูปแบบรายงานอย่างเป็นทางการ
 ---
 ## 2. วัตถุประสงค์ (Objectives)
+
 1. ออกแบบสถาปัตยกรรม Agent แบบ Sequential + Parallel + Loop
 2. ใช้ Session State เพื่อบริหารจัดการข้อมูลระหว่างเอเจนต์
 3. บังคับใช้ Tool (`exit_loop`) ในการควบคุมการจบ Loop

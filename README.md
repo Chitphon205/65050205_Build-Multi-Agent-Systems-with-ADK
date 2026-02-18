@@ -141,5 +141,6 @@ root_agent = historical_court_system
 - การจัดการข้อมูลด้วย Session State
 - การสร้างผลลัพธ์ในรูปแบบรายงานเชิงวิชาการ
 ---
+## 10. สถาปัตยกรรมระบบ
 <img width="1224" height="645" alt="image" src="https://github.com/user-attachments/assets/a9071515-146a-421e-8576-249f3563e880" />
 
